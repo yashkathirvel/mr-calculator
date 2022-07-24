@@ -10,7 +10,6 @@ import re
 with open('./periodic-table.csv', 'r') as file:
 
     reader = csv.DictReader(file)
-
     data = {}
 
     for row in reader:
