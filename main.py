@@ -1,9 +1,7 @@
 # import libraries:
 
 import csv
-from os import sep
 import re
-import string
 
 # ---------------------------------------------------------------------------------
 
@@ -21,7 +19,7 @@ with open('./periodic-table.csv', 'r') as file:
 
 # user input and separate string:
 
-form = 'C10H15N'
+form = input('Please enter your molecular formula (ex. H2O, HBr, CH3COOH): \n')
 
 # regex that separates strings at each uppercase letter:
 
@@ -34,12 +32,20 @@ sep_form = re.sub(r"([A-Z])",
 fixed_form = list(map(lambda x:  x + '1' if x.isalpha()==True else x,
                       sep_form))
 
+# init molecular weight variable:
+
+mr = 0
+
+# calculate molecular weight
+
 for i in fixed_form:
-    match = re.match(r"([a-z]+)([0-9]+)", i, re.I)
+    match = re.match(r"([a-z]+)([0-9]+)", 
+                     i, 
+                     re.I)
     if match:
         items = match.groups()
-        print(items[0])
+        mr += data[items[0]] * float(items[1])
 
+print('The molecular weight is', mr)
 
-
-
+# ---------------------------------------------------------------------------------
