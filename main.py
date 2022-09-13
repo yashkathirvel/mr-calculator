@@ -9,14 +9,7 @@ def main():
 
     # import atomic mass data:
 
-    with open('./periodic-table.csv', 'r') as file:
-
-        reader = csv.DictReader(file)
-        data = {}
-
-        for row in reader:
-            new_data = {row['Symbol'] : float(row['AtomicMass'])}
-            data.update(new_data)
+    data = read_periodic_table()
 
     # user input and separate string:
 
@@ -48,6 +41,20 @@ def main():
             mr += data[items[0]] * float(items[1])
 
     print('The molecular weight is', mr)
+
+# ---------------------------------------------------------------------------------
+
+def read_periodic_table():
+
+    with open('./periodic-table.csv', 'r') as file:
+        reader = csv.DictReader(file)
+        data = {}
+
+        for row in reader:
+            new_data = {row['Symbol'] : float(row['AtomicMass'])}
+            data.update(new_data)
+
+    return data
 
 # ---------------------------------------------------------------------------------
 
