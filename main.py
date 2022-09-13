@@ -5,46 +5,51 @@ import re
 
 # ---------------------------------------------------------------------------------
 
-# import atomic mass data:
+def main():
 
-with open('./periodic-table.csv', 'r') as file:
+    # import atomic mass data:
 
-    reader = csv.DictReader(file)
-    data = {}
+    with open('./periodic-table.csv', 'r') as file:
 
-    for row in reader:
-        new_data = {row['Symbol'] : float(row['AtomicMass'])}
-        data.update(new_data)
+        reader = csv.DictReader(file)
+        data = {}
 
-# user input and separate string:
+        for row in reader:
+            new_data = {row['Symbol'] : float(row['AtomicMass'])}
+            data.update(new_data)
 
-form = input('Please enter your molecular formula (ex. H2O, HBr, CH3COOH): \n')
+    # user input and separate string:
 
-# regex that separates strings at each uppercase letter:
+    form = input('Please enter your molecular formula (ex. H2O, HBr, CH3COOH): \n')
 
-sep_form = re.sub(r"([A-Z])", 
-                  r" \1", 
-                  form).split()
+    # regex that separates strings at each uppercase letter:
 
-# map and function that adds 1 to unnumbered elements:
+    sep_form = re.sub(r"([A-Z])", 
+                    r" \1", 
+                    form).split()
 
-fixed_form = list(map(lambda x:  x + '1' if x.isalpha()==True else x,
-                      sep_form))
+    # map and function that adds 1 to unnumbered elements:
 
-# init molecular weight variable:
+    fixed_form = list(map(lambda x:  x + '1' if x.isalpha()==True else x,
+                        sep_form))
 
-mr = 0
+    # init molecular weight variable:
 
-# calculate molecular weight
+    mr = 0
 
-for i in fixed_form:
-    match = re.match(r"([a-z]+)([0-9]+)", 
-                     i, 
-                     re.I)
-    if match:
-        items = match.groups()
-        mr += data[items[0]] * float(items[1])
+    # calculate molecular weight
 
-print('The molecular weight is', mr)
+    for i in fixed_form:
+        match = re.match(r"([a-z]+)([0-9]+)", 
+                        i, 
+                        re.I)
+        if match:
+            items = match.groups()
+            mr += data[items[0]] * float(items[1])
+
+    print('The molecular weight is', mr)
 
 # ---------------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    main()
